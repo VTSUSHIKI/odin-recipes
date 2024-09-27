@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive 3D Cube</title>
+    <link rel="stylesheet" href="../CSS/box.css">
+</head>
+<style>body{
+    background-image: url("../img/store.jpeg");
+    background-size: cover;
+    background-position: center;
+  }</style>
+<body>
+    <div class="scene">
+        <div class="cube">
+            <div class="cube-face cube-front">Caixa</div>
+            <div class="cube-face cube-back">Louca</div>
+            <div class="cube-face cube-left">DE</div>
+            <div class="cube-face cube-right">Mais</div>
+            <div class="cube-face cube-top">Se</div>
+            <div class="cube-face cube-bottom">Loko</div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cube = document.querySelector('.cube');
+            let isDragging = false;
+            let startX, startY;
+            let currentX = 0, currentY = 0;
+
+            document.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const deltaX = e.clientX - startX;
+                    const deltaY = e.clientY - startY;
+                    currentX -= deltaY * 0.1; // Invert the Y-axis movement
+                    currentY += deltaX * 0.1;
+                    cube.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            document.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                if (isDragging) {
+                    const deltaX = e.touches[0].clientX - startX;
+                    const deltaY = e.touches[0].clientY - startY;
+                    currentX -= deltaY * 0.1; // Invert the Y-axis movement
+                    currentY += deltaX * 0.1;
+                    cube.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                }
+            });
+
+            document.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+        });
+    </script>
+</body>
+</html>
